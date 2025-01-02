@@ -8,8 +8,10 @@ def mask_account_card(string: str) -> str:
     """
     if "Счет" in string:
         return get_mask_account(string[-20:])
-    else:
+    elif "Visa" in string or "MasterCard" in string or "Maestro" in string:
         return get_mask_card_number(string[-16:])
+    else:
+        return "Введены некорректные данные"
 
 
 def get_date(string_date: str) -> str:
