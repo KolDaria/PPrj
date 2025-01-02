@@ -93,9 +93,22 @@ from src.processing import filter_by_state, sort_by_date
 ```
 
 ## Тестирование функций:
-
-<img height="300" src="C:\Users\Dr\Desktop\PPrj\htmlcov\index.html" width="300"/>
-
+```
+---------- coverage: platform win32, python 3.13.0-final-0 -----------
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+src\__init__.py                0      0   100%
+src\masks.py                  19      0   100%
+src\processing.py              8      0   100%
+src\widget.py                 11      0   100%
+tests\__init__.py              0      0   100%
+tests\conftest.py              4      0   100%
+tests\test_masks.py           19      0   100%
+tests\test_processing.py       8      0   100%
+tests\test_widget.py          22      0   100%
+----------------------------------------------
+TOTAL                         91      0   100%
+```
 ## Документация:
 
 Дополнительную информацию о структуре проекта и API можно найти в [документации](docs/README.md).
