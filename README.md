@@ -92,6 +92,23 @@ from src.processing import filter_by_state, sort_by_date
 [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
 ```
 
+## Тестирование функций:
+```
+---------- coverage: platform win32, python 3.13.0-final-0 -----------
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+src\__init__.py                0      0   100%
+src\masks.py                  19      0   100%
+src\processing.py              8      0   100%
+src\widget.py                 11      0   100%
+tests\__init__.py              0      0   100%
+tests\conftest.py              4      0   100%
+tests\test_masks.py           19      0   100%
+tests\test_processing.py       8      0   100%
+tests\test_widget.py          22      0   100%
+----------------------------------------------
+TOTAL                         91      0   100%
+```
 ## Документация:
 
 Дополнительную информацию о структуре проекта и API можно найти в [документации](docs/README.md).
