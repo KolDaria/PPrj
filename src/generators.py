@@ -1,18 +1,7 @@
-import pytest
+from collections.abc import Iterator
 
-
-@pytest.fixture
-def coll():
-    return [
-        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:19:33.419441'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
-        {'id': 41428829, 'state': 'EXECUTED', 'date': '2017.07.03T18:35:29.512364'}]
-
-
-@pytest.fixture
-def transactions():
-    return [
+transactions = (
+    [
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -89,3 +78,59 @@ def transactions():
             "to": "Счет 14211924144426031657"
         }
     ]
+)
+
+
+def filter_by_currency(transactions: list[dict], currency: str) -> Iterator:
+    """
+    Принимает на вход список словарей, представляющих транзакции и
+    возвращает итератор, который поочередно выдает транзакции
+    """
+    try:
+        for transaction in transactions:
+            if transaction['operationAmount']['currency']['code'] == currency:
+                yield transaction
+    except TypeError:
+        if type(transactions) is not list[dict]:
+            raise TypeError
+
+
+usd_transactions = filter_by_currency(transactions, "USD")
+
+for _ in range(2):
+    print(next(usd_transactions))
+
+
+def transaction_descriptions(transactions: list[dict]) -> Iterator:
+    """
+    Принимает список словарей с транзакциями и возвращает описание каждой операции по очереди
+    """
+    for transact in transactions:
+        yield transact.get("description")
+
+
+descriptions = transaction_descriptions(transactions)
+
+for _ in range(5):
+    print(next(descriptions))
+
+
+def card_number_generator(start: int, stop: int) -> Iterator:
+    """
+    Принимает начальное и конечное значения для генерации диапазона номеров и
+    выдает номера банковских карт
+    """
+    if type(start) is not int or type(stop) is not int:
+        raise TypeError
+
+    while start <= stop:
+        card_number = str(start).zfill(16)
+        card_number_parts = [card_number[i:i+4] for i in range(0, 16, 4)]
+        yield " ".join(card_number_parts)
+        start += 1
+
+
+generator = card_number_generator(1, 5)
+
+for card_number_parts in generator:
+    print(card_number_parts)
