@@ -1,0 +1,8 @@
+my_function ok, start: 1737566090.4858124, stop: 1737566090.485813
+my_function error: can only concatenate str (not "int") to str Inputs: ('1', 2), {} start: 1737566114.8567722, stop: 1737566114.8567739my_function ok, start: 1737566187.6509142, stop: 1737566187.650915
+my_function ok, start: 1737566196.5514839, stop: 1737566196.5514843
+my_function ok, start: 1737566213.419006, stop: 1737566213.4190083
+my_function ok, start: 1737566213.455318, stop: 1737566213.455319
+my_function error: can only concatenate str (not "int") to str Inputs: ('1', 2), {} start: 1737566213.459718, stop: 1737566213.4597218my_function ok, start: 1737566225.1391644, stop: 1737566225.1391652
+my_function ok, start: 1737566225.1560879, stop: 1737566225.1560886
+my_function error: can only concatenate str (not "int") to str Inputs: ('1', 2), {} start: 1737566225.1581807, stop: 1737566225.1581829
