@@ -184,7 +184,7 @@ my_function error: тип ошибки. Inputs: (1, 2), {}
 
 ## Тестирование функций:
 ```
----------- coverage: platform win32, python 3.13.0-final-0 -----------    
+---------- coverage: platform win32, python 3.13.0-final-0 -----------        
 Name                       Stmts   Miss  Cover
 ----------------------------------------------
 src\__init__.py                0      0   100%
@@ -195,13 +195,13 @@ src\processing.py              8      0   100%
 src\widget.py                 11      0   100%
 tests\__init__.py              0      0   100%
 tests\conftest.py              7      0   100%
-tests\test_decorators.py      15      0   100%
+tests\test_decorators.py      35      0   100%
 tests\test_generators.py      31      0   100%
 tests\test_masks.py           19      0   100%
 tests\test_processing.py       8      0   100%
 tests\test_widget.py          22      0   100%
 ----------------------------------------------
-TOTAL                        199      4    98%
+TOTAL                        219      4    98%
 ```
 ## Документация:
 
