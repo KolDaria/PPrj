@@ -39,6 +39,8 @@ poetry add requests
 9. `transaction_descriptions`: функция возвращает описание каждой операции по очереди из списка словарей с транзакциями.
 10. `card_number_generator`: функция возвращает номера банковских карт из заданного 
 начального и конечного значения для генерации диапазона номеров.
+11. `log`: декоратор который автоматически логирует начало и конец выполнения функции, а также ее результаты 
+или возникшие ошибки.
 #### Папку `tests` в которой реализованно следующее:
 
 1. `__init__`: инициализация объекта.
@@ -46,6 +48,7 @@ poetry add requests
 3. `test_widget.py`: модуль для тестирования функций `get_date, mask_account_card`.
 4. `test_processing.py`: модуль для тестирования функций `filter_by_state, sort_by_date`.
 5. `test_generators.py`: модуль для тестирования функций `filter_by_currency, transaction_descriptions, card_number_generator`
+6. `test_decorators.py`: модуль для тестирования декоратора `log`.
 
 ##### Примеры использования функций `get_mask_account, get_mask_card_number`:
 
@@ -159,24 +162,46 @@ for card_number in card_number_generator(1, 5):
     0000 0000 0000 0005
 ```
 
+##### Пример использования декоратора `log`:
+
+```python
+@log(filename="mylog.txt")
+def my_function(x, y):
+    return x + y
+
+my_function(1, 2)
+
+Ожидаемый вывод в лог-файл mylog.txt
+
+при успешном выполнении:
+my_function ok
+
+Ожидаемый вывод при ошибке:
+my_function error: тип ошибки. Inputs: (1, 2), {}
+
+Где тип ошибки заменяется на текст ошибки.
+```
+
 ## Тестирование функций:
 ```
----------- coverage: platform win32, python 3.13.0-final-0 -----------
+---------- coverage: platform win32, python 3.13.0-final-0 -----------        
 Name                       Stmts   Miss  Cover
 ----------------------------------------------
 src\__init__.py                0      0   100%
+src\decorators.py             29      1    97%
 src\generators.py             30      3    90%
 src\masks.py                  19      0   100%
 src\processing.py              8      0   100%
 src\widget.py                 11      0   100%
 tests\__init__.py              0      0   100%
 tests\conftest.py              7      0   100%
+tests\test_decorators.py      35      0   100%
 tests\test_generators.py      31      0   100%
 tests\test_masks.py           19      0   100%
 tests\test_processing.py       8      0   100%
 tests\test_widget.py          22      0   100%
 ----------------------------------------------
-TOTAL                        155      3    98%
+TOTAL                        219      4    98%
 ```
 ## Документация:
 
