@@ -27,4 +27,4 @@ def test_get_list_dict_transaction_invalid_json_file():
 
 def test_get_list_dict_transaction_file_not_found():
     result = get_list_dict_transaction('non_existent_file.json')
-    assert result is None
+    assert result == []
