@@ -28,10 +28,8 @@ def get_a_transaction_conversion(python_transaction: Any) -> Any:
             status_code = response.status_code
             result = response.json()
             if status_code == 200:
-                conversion = round(float(result["result"]), 2)
-                print(conversion)
+                return round(float(result["result"]), 2)
             else:
-                print(f"Ошибка запроса. Причина: {response.reason}")
+                return f"Ошибка запроса. Причина: {response.reason}"
         else:
-            amount = round(float(transact["operationAmount"]["amount"]), 2)
-            print(amount)
+            return round(float(transact["operationAmount"]["amount"]), 2)

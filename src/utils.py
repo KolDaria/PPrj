@@ -13,7 +13,7 @@ def get_list_dict_transaction(file_json: Any) -> Any:
     except json.JSONDecodeError:
         return list()
     except FileNotFoundError:
-        return None
+        return list()
 
 
 file = 'C:\\Users\\Dr\\Desktop\\PPrj\\data\\operations.json'
