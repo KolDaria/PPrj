@@ -3,7 +3,7 @@
 ## **Описание:**
 
 Проект "Виджет банковских операций клиента" - виджет, который показывает несколько последних успешных банковских операций клиента.
-Проект был создан без импортируемых библиотек. 
+ 
 
 ## **Установка:**
 
@@ -26,7 +26,7 @@ poetry add requests
 
 ### *Проект содержит:*
 
-#### Папку `src` в которой реализованны следующее функции:
+#### Папку `src` в которой реализованны следующие функции:
 
 1. `__init__`: инициализация объекта.
 2. `get_mask_card_number`: функция возвращает маску номера карты пользователя.
@@ -41,6 +41,10 @@ poetry add requests
 начального и конечного значения для генерации диапазона номеров.
 11. `log`: декоратор который автоматически логирует начало и конец выполнения функции, а также ее результаты 
 или возникшие ошибки.
+12. `get_list_dict_transaction`: функция возвращает список словарей с данными о финансовых транзакциях из JSON-файла.
+13. `get_reading_financial_transactions_csv`: функция считывает финансовые операции из CSV-файлов.
+14. `get_reading_financial_transactions_xlsx`: функция считывает финансовые операции из XLSX-файлов.
+
 #### Папку `tests` в которой реализованно следующее:
 
 1. `__init__`: инициализация объекта.
@@ -49,6 +53,13 @@ poetry add requests
 4. `test_processing.py`: модуль для тестирования функций `filter_by_state, sort_by_date`.
 5. `test_generators.py`: модуль для тестирования функций `filter_by_currency, transaction_descriptions, card_number_generator`
 6. `test_decorators.py`: модуль для тестирования декоратора `log`.
+7. `test_external_api.py`: модуль для тестирования функции `get_a_transaction_conversion`.
+8. `test_utils.py`: модуль для тестирования функции `get_list_dict_transaction`.
+9. `test_reading_CSV_XLSX.py`: модуль для тестирования функций `get_reading_financial_transactions_csv, get_reading_financial_transactions_xlsx`.
+
+#### В корне проекта реализованны следующие функции:
+
+1. `get_a_transaction_conversion`: функция возвращает сумму транзакции (amount) в рублях.
 
 ##### Примеры использования функций `get_mask_account, get_mask_card_number`:
 
@@ -182,26 +193,97 @@ my_function error: тип ошибки. Inputs: (1, 2), {}
 Где тип ошибки заменяется на текст ошибки.
 ```
 
+##### Пример использования функции `get_list_dict_transaction`:
+
+```python
+При успешном выполнении:
+[{"id": 441945886, "state": "EXECUTED"}]
+
+Ожидаемый вывод при ошибке:
+[]
+```
+
+##### Пример использования функции `get_a_transaction_conversion`:
+
+```python
+python_transaction = [{
+        "id": 441945886,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {
+          "amount": "31957.58",
+          "currency": {
+            "name": "USD",
+            "code": "USD"
+          }
+        },
+        "description": "Перевод организации",
+        "from": "Maestro 1596837868705199",
+        "to": "Счет 64686473678894779589"
+      }
+    ]
+
+@pytest.mark.parametrize("status_code, result", [
+    (200, {"result": 3724.305775, "success": "true"}),
+    (400, None)
+])
+
+при успешном выполнении:
+{"result": 3724.305775, "success": "true"}
+
+ожидаемый вывод при ошибке:
+None
+```
+
+##### Примеры использования функций `get_reading_financial_transactions_csv, get_reading_financial_transactions_xlsx`:
+
+```python
+# Пример для функции get_reading_financial_transactions_csv
+
+При успешном выполнении:
+[{'id': '650703', 'state': 'EXECUTED', 'date': '2023-09-05T11:30:32Z',
+'amount': '16210', 'currency_name': 'Sol', 'currency_code': 'PEN',
+'from': 'Счет 58803664561298323391', 'to': 'Счет 39745660563456619397','description': 'Перевод организации'}]
+
+Ожидаемый вывод при ошибке:
+[]
+
+# Пример для функции get_reading_financial_transactions_xlsx
+
+При успешном выполнении:
+[{'id': '650703', 'state': 'EXECUTED', 'date': '2023-09-05T11:30:32Z', 'amount': '16210', 'currency_name': 'Sol', 'currency_code': 'PEN',
+'from': 'Счет 58803664561298323391', 'to': 'Счет 39745660563456619397', 'description': 'Перевод организации'}]
+
+Ожидаемый вывод при ошибке:
+[]
+```
+
 ## Тестирование функций:
 ```
----------- coverage: platform win32, python 3.13.0-final-0 -----------        
-Name                       Stmts   Miss  Cover
-----------------------------------------------
-src\__init__.py                0      0   100%
-src\decorators.py             29      1    97%
-src\generators.py             30      3    90%
-src\masks.py                  19      0   100%
-src\processing.py              8      0   100%
-src\widget.py                 11      0   100%
-tests\__init__.py              0      0   100%
-tests\conftest.py              7      0   100%
-tests\test_decorators.py      35      0   100%
-tests\test_generators.py      31      0   100%
-tests\test_masks.py           19      0   100%
-tests\test_processing.py       8      0   100%
-tests\test_widget.py          22      0   100%
-----------------------------------------------
-TOTAL                        219      4    98%
+---------- coverage: platform win32, python 3.13.0-final-0 -----------    
+Name                             Stmts   Miss  Cover
+----------------------------------------------------
+external_api.py                     19      1    95%
+src\__init__.py                      0      0   100%
+src\decorators.py                   29      1    97%
+src\generators.py                   30      3    90%
+src\masks.py                        36      0   100%
+src\processing.py                    8      0   100%
+src\reading_CSV_XLSX.py             20      0   100%
+src\utils.py                        27      0   100%
+src\widget.py                       11      0   100%
+tests\__init__.py                    0      0   100%
+tests\conftest.py                    7      0   100%
+tests\test_decorators.py            35      0   100%
+tests\test_external_api.py          17      0   100%
+tests\test_generators.py            31      0   100%
+tests\test_masks.py                 19      0   100%
+tests\test_processing.py             8      0   100%
+tests\test_reading_CSV_XLSX.py      31      0   100%
+tests\test_utils.py                 21      0   100%
+tests\test_widget.py                22      0   100%
+----------------------------------------------------
+TOTAL                              371      5    99%
 ```
 ## Документация:
 
