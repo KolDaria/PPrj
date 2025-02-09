@@ -19,14 +19,12 @@ def test_get_mask_card_number_error():
 
 @pytest.mark.parametrize("value, expected", [
     (15328974562158744568, "****************XXXX"),
-    (" ", "Введены некорректные данные"),
-    ("jljlkhkjgglhgdgh", "Введены некорректные данные")
+    (" ", "Введены некорректные данные: номер счета должен содержать только цифры"),
+    ("jljlkhkjgglhgdgh", "Введены некорректные данные: номер счета должен содержать только цифры")
 ])
 def test_get_mask_account(value, expected):
     assert get_mask_account(value) == expected
 
 
 def test_get_mask_account_error():
-    with pytest.raises(IndexError) as exc_info:
-        get_mask_account(456897215)
-    assert str(exc_info.value) == "Номер счета должен быть равен 20 символам"
+    assert get_mask_account(456897215) == "Номер счета должен быть равен 20 символам"

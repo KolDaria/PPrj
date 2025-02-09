@@ -86,19 +86,23 @@ def filter_by_currency(transactions: list[dict], currency: str) -> Iterator:
     Принимает на вход список словарей, представляющих транзакции и
     возвращает итератор, который поочередно выдает транзакции
     """
-    try:
-        for transaction in transactions:
-            if transaction['operationAmount']['currency']['code'] == currency:
-                yield transaction
-    except TypeError:
-        if type(transactions) is not list[dict]:
-            raise TypeError
+    filtered_transactions = []
+    for transaction in transactions:
+        try:
+            currency_code = None
+            if isinstance(transaction.get('operationAmount'), dict) and \
+                    isinstance(transaction['operationAmount'].get('currency'), dict) and \
+                    'code' in transaction['operationAmount']['currency']:
+                currency_code = transaction['operationAmount']['currency']['code']
+            elif 'currency' in transaction:
+                currency_code = transaction['currency']
 
-
-usd_transactions = filter_by_currency(transactions, "USD")
-
-for _ in range(2):
-    print(next(usd_transactions))
+            if currency_code == currency:
+                filtered_transactions.append(transaction)
+        except TypeError:
+            if type(transactions) is not list[dict]:
+                raise TypeError
+    return filtered_transactions
 
 
 def transaction_descriptions(transactions: list[dict]) -> Iterator:
@@ -107,12 +111,6 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator:
     """
     for transact in transactions:
         yield transact.get("description")
-
-
-descriptions = transaction_descriptions(transactions)
-
-for _ in range(5):
-    print(next(descriptions))
 
 
 def card_number_generator(start: int, stop: int) -> Iterator:
@@ -128,9 +126,3 @@ def card_number_generator(start: int, stop: int) -> Iterator:
         card_number_parts = [card_number[i:i+4] for i in range(0, 16, 4)]
         yield " ".join(card_number_parts)
         start += 1
-
-
-generator = card_number_generator(1, 5)
-
-for card_number_parts in generator:
-    print(card_number_parts)

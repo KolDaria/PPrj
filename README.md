@@ -44,6 +44,9 @@ poetry add requests
 12. `get_list_dict_transaction`: функция возвращает список словарей с данными о финансовых транзакциях из JSON-файла.
 13. `get_reading_financial_transactions_csv`: функция считывает финансовые операции из CSV-файлов.
 14. `get_reading_financial_transactions_xlsx`: функция считывает финансовые операции из XLSX-файлов.
+15. `get_dict_of_transactions_depending_category`: функция возвращает словарь, в котором ключи — это названия категорий, 
+а значения — это количество операций в каждой категории.
+16. `get_transaction_data_from_the_search_bar`: функция возвращает список словарей, с учетом строки для поиска.
 
 #### Папку `tests` в которой реализованно следующее:
 
@@ -56,10 +59,14 @@ poetry add requests
 7. `test_external_api.py`: модуль для тестирования функции `get_a_transaction_conversion`.
 8. `test_utils.py`: модуль для тестирования функции `get_list_dict_transaction`.
 9. `test_reading_CSV_XLSX.py`: модуль для тестирования функций `get_reading_financial_transactions_csv, get_reading_financial_transactions_xlsx`.
+10. `test_search_category.py`: модуль для тестирования функций `get_dict_of_transactions_depending_category`.
+11. `test_search_description`: модуль для тестирования функций `get_transaction_data_from_the_search_bar`.
+12. `test_main`: модуль для тестирования функций `functionality_of_the_project`.
 
 #### В корне проекта реализованны следующие функции:
 
 1. `get_a_transaction_conversion`: функция возвращает сумму транзакции (amount) в рублях.
+2. `functionality_of_the_project`: функция отвечающая за основную логику проекта и связывающая функциональности между собой.
 
 ##### Примеры использования функций `get_mask_account, get_mask_card_number`:
 
@@ -257,33 +264,71 @@ None
 Ожидаемый вывод при ошибке:
 []
 ```
+##### Пример использования функции `get_dict_of_transactions_depending_category`:
+
+```python
+При успешном выполнении:
+{"Перевод организации": 1}
+
+Ожидаемый вывод при ошибке:
+{}
+```
+
+##### Пример использования функции `get_transaction_data_from_the_search_bar`:
+
+```python
+При успешном выполнении:
+[{'id': '650703', 'state': 'EXECUTED', 'date': '2023-09-05T11:30:32Z', 'amount': '16210', 'currency_name': 'Sol',
+'currency_code': 'PEN', 'from': 'Счет 58803664561298323391', 'to': 'Счет 39745660563456619397',
+'description': 'Перевод организации'}]
+
+Ожидаемый вывод при ошибке:
+[]
+```
+
+##### Пример использования функции `functionality_of_the_project`:
+
+```python
+При успешном выполнении:
+"Всего банковских операций в выборке: 1"
+
+Ожидаемый вывод при ошибке:
+"Всего банковских операций в выборке:"
+```
 
 ## Тестирование функций:
 ```
----------- coverage: platform win32, python 3.13.0-final-0 -----------    
-Name                             Stmts   Miss  Cover
-----------------------------------------------------
-external_api.py                     19      1    95%
-src\__init__.py                      0      0   100%
-src\decorators.py                   29      1    97%
-src\generators.py                   30      3    90%
-src\masks.py                        36      0   100%
-src\processing.py                    8      0   100%
-src\reading_CSV_XLSX.py             20      0   100%
-src\utils.py                        27      0   100%
-src\widget.py                       11      0   100%
-tests\__init__.py                    0      0   100%
-tests\conftest.py                    7      0   100%
-tests\test_decorators.py            35      0   100%
-tests\test_external_api.py          17      0   100%
-tests\test_generators.py            31      0   100%
-tests\test_masks.py                 19      0   100%
-tests\test_processing.py             8      0   100%
-tests\test_reading_CSV_XLSX.py      31      0   100%
-tests\test_utils.py                 21      0   100%
-tests\test_widget.py                22      0   100%
-----------------------------------------------------
-TOTAL                              371      5    99%
+---------- coverage: platform win32, python 3.13.0-final-0 -----------
+Name                               Stmts   Miss  Cover
+------------------------------------------------------
+external_api.py                       19      1    95%
+main.py                              112     33    71%
+src\__init__.py                        0      0   100%
+src\decorators.py                     29      1    97%
+src\generators.py                     28      6    79%
+src\masks.py                          36      0   100%
+src\processing.py                      8      0   100%
+src\reading_CSV_XLSX.py               25      0   100%
+src\search_category.py                 8      0   100%
+src\search_description.py              8      0   100%
+src\utils.py                          26      0   100%
+src\widget.py                         11      0   100%
+tests\__init__.py                      0      0   100%
+tests\conftest.py                      7      0   100%
+tests\test_decorators.py              35      0   100%
+tests\test_external_api.py            17      0   100%
+tests\test_generators.py              31      0   100%
+tests\test_main.py                    42      0   100%
+tests\test_masks.py                   17      0   100%
+tests\test_processing.py               8      0   100%
+tests\test_reading_CSV_XLSX.py        31      0   100%
+tests\test_search_category.py          5      0   100%
+tests\test_search_description.py       5      0   100%
+tests\test_utils.py                   21      0   100%
+tests\test_widget.py                  20      0   100%
+------------------------------------------------------
+TOTAL                                549     41    93%
+
 ```
 ## Документация:
 
