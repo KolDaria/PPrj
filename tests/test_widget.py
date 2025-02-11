@@ -24,9 +24,7 @@ def test_mask_account_card_error():
     with pytest.raises(IndexError) as exc_info:
         mask_account_card("Visa 1254")
     assert str(exc_info.value) == "Номер карты должен быть равен 16 символам"
-    with pytest.raises(IndexError) as exc_info:
-        mask_account_card("Счет 16546")
-    assert str(exc_info.value) == "Номер счета должен быть равен 20 символам"
+    assert mask_account_card("Счет 16546") == "Введены некорректные данные: номер счета должен содержать только цифры"
 
 
 @pytest.mark.parametrize("value, expected", [

@@ -38,11 +38,11 @@ def get_mask_account(account_number: [int, str]) -> str:
     logger.info('Запуск функции маскировки номера счета')
     account_number = str(account_number)
     mask_account = ("*" * len(account_number[:-4])) + ("X" * len(account_number[-4:]))
-    if account_number.isalpha() or account_number == " ":
-        logger.warning('Введены некорректные данные')
-        return "Введены некорректные данные"
+    if not account_number.isdigit():
+        logger.warning('Введены некорректные данные: номер счета должен содержать только цифры')
+        return "Введены некорректные данные: номер счета должен содержать только цифры"
     elif len(account_number) != 20:
         logger.error('Ошибка, номер счета не равен 20 символам')
-        raise IndexError("Номер счета должен быть равен 20 символам")
+        return "Номер счета должен быть равен 20 символам"
     logger.info('Маскировка номера счета прошла успешно')
     return mask_account

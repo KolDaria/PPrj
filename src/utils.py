@@ -33,6 +33,3 @@ def get_list_dict_transaction(file_json: Any) -> Any:
 
 
 file = 'C:\\Users\\Dr\\Desktop\\PPrj\\data\\operations.json'
-
-
-python_transaction = get_list_dict_transaction(file)

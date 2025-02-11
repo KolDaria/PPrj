@@ -4,7 +4,7 @@ def filter_by_state(list_of_dicts: list, state: str = 'EXECUTED') -> list:
     """
     new_lists = []
     for dicts in list_of_dicts:
-        if dicts['state'] == state:
+        if dicts.get('state') == state:
             new_lists.append(dicts)
     return new_lists
 

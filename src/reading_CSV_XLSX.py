@@ -8,9 +8,13 @@ def get_reading_financial_transactions_csv(path_cvs_file: str) -> list[dict]:
     Считывание финансовых операций из CSV-файлов.
     """
     try:
+        transactions = []
         with open(path_cvs_file, encoding='utf-8') as file:
             reader = csv.DictReader(file, delimiter=';')
-        return list(reader)
+            for row in reader:
+                if any(row.values()):
+                    transactions.append(row)
+            return transactions
     except FileNotFoundError:
         return []
 
@@ -23,11 +27,12 @@ def get_reading_financial_transactions_xlsx(path_xlsx_file: str) -> list[dict]:
     Считывание финансовых операций из XLSX-файлов.
     """
     try:
-        list_row = []
         excel_data = pd.read_excel(path_xlsx_file)
+        transactions = []
         for index, row in excel_data.iterrows():
-            list_row.append(dict(row))
-        return list_row
+            if not row.isnull().all():
+                transactions.append(dict(row))
+        return transactions
     except FileNotFoundError:
         return []
 
